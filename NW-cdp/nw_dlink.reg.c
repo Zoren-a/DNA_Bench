@@ -1,0 +1,7 @@
+#define NUM_PRELINKED_OBJECTS 6
+DEFINE_REGISTER_FUNC(_12_main_cpp1_ii_2f83be7f)
+DEFINE_REGISTER_FUNC(_15_kernel0_cpp1_ii_fc606274)
+DEFINE_REGISTER_FUNC(_15_kernel1_cpp1_ii_78e8e986)
+DEFINE_REGISTER_FUNC(_15_kernel2_cpp1_ii_51205d74)
+DEFINE_REGISTER_FUNC(_15_kernel3_cpp1_ii_ff48cce5)
+DEFINE_REGISTER_FUNC(_38_cuda_device_runtime_compute_86_cpp1_ii_8b1a5d37)

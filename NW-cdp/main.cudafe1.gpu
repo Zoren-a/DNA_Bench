@@ -1,0 +1,75 @@
+typedef char __nv_bool;
+# 2763 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/driver_types.h"
+struct CUstream_st;
+# 8 "/usr/include/bits/types/struct_timeval.h" 3
+struct timeval;
+# 49 "/usr/include/bits/types/struct_FILE.h" 3
+struct _IO_FILE;
+# 52 "/usr/include/sys/time.h" 3
+struct timezone;
+# 9 "timer.h"
+enum PrintColor {
+# 9 "timer.h"
+NONE,
+# 9 "timer.h"
+GREEN,
+# 9 "timer.h"
+DGREEN,
+# 9 "timer.h"
+CYAN};
+# 11 "timer.h"
+struct Timer;
+# 209 "/opt/apps/gcc/9.4.0/lib/gcc/x86_64-pc-linux-gnu/9.4.0/include/stddef.h" 3
+typedef unsigned long size_t;
+#include "crt/device_runtime.h"
+# 158 "/usr/include/bits/types.h" 3
+typedef long __time_t;
+# 160 "/usr/include/bits/types.h" 3
+typedef long __suseconds_t;
+# 8 "/usr/include/bits/types/struct_timeval.h" 3
+struct timeval {
+# 10 "/usr/include/bits/types/struct_timeval.h" 3
+__time_t tv_sec;
+# 11 "/usr/include/bits/types/struct_timeval.h" 3
+__suseconds_t tv_usec;};
+# 7 "/usr/include/bits/types/FILE.h" 3
+typedef struct _IO_FILE FILE;
+# 58 "/usr/include/sys/time.h" 3
+typedef struct timezone *__restrict__ __timezone_ptr_t;
+# 11 "timer.h"
+struct Timer {
+# 12 "timer.h"
+struct timeval startTime;
+# 13 "timer.h"
+struct timeval endTime;};
+# 14 "timer.h"
+typedef struct Timer Timer;
+# 258 "/opt/apps/gcc/9.4.0/include/c++/9.4.0/x86_64-pc-linux-gnu/bits/c++config.h" 3
+typedef unsigned long _ZSt6size_t;
+# 121 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/cuda_device_runtime_api.h"
+___device__(extern  __no_sc__) enum cudaError cudaDeviceSynchronize(void);
+# 139 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/cuda_device_runtime_api.h"
+___device__(extern  __no_sc__) enum cudaError cudaFree(void *);
+# 140 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/cuda_device_runtime_api.h"
+___device__(extern  __no_sc__) enum cudaError cudaMalloc(void **, size_t);
+#if !defined(__CUDABE__)
+# 153 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/crt/common_functions.h"
+ __device_builtin__ ___device__(extern  __no_sc__) int printf(const char *__restrict__, ...);
+#endif
+# 157 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/crt/common_functions.h"
+___device__(extern  __no_sc__) __attribute__((__malloc__)) __attribute__((__nothrow__)) void *malloc(size_t);
+# 158 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/crt/common_functions.h"
+___device__(extern  __no_sc__) __attribute__((__nothrow__)) void free(void *);
+# 3295 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/crt/device_functions.h"
+___device__(extern  __no_sc__) unsigned __cudaPushCallConfiguration(struct dim3, struct dim3, size_t, struct CUstream_st *);
+# 10 "common.h"
+__global__ __var_used__ extern void _Z7nw_gpu0PhS_Pij(unsigned char *, unsigned char *, int *, unsigned);
+# 11 "common.h"
+__global__ __var_used__ extern void _Z7nw_gpu1PhS_Pij(unsigned char *, unsigned char *, int *, unsigned);
+# 12 "common.h"
+__global__ __var_used__ extern void _Z7nw_gpu2PhS_Pij(unsigned char *, unsigned char *, int *, unsigned);
+# 13 "common.h"
+__global__ __var_used__ extern void _Z7nw_gpu3PhS_Pij(unsigned char *, unsigned char *, int *, unsigned);
+#include "common_functions.h"
+#if !defined(__CUDABE__)
+#endif

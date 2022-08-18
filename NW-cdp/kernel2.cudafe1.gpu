@@ -1,0 +1,285 @@
+typedef char __nv_bool;
+# 2763 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/driver_types.h"
+struct CUstream_st;
+# 209 "/opt/apps/gcc/9.4.0/lib/gcc/x86_64-pc-linux-gnu/9.4.0/include/stddef.h" 3
+typedef unsigned long size_t;
+#include "crt/device_runtime.h"
+# 258 "/opt/apps/gcc/9.4.0/include/c++/9.4.0/x86_64-pc-linux-gnu/bits/c++config.h" 3
+typedef unsigned long _ZSt6size_t;
+# 202 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/cuda_device_runtime_api.h"
+___device__(extern  __no_sc__) void *cudaGetParameterBufferV2(void *, struct dim3, struct dim3, unsigned);
+# 223 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/cuda_device_runtime_api.h"
+___device__(extern  __no_sc__) enum cudaError cudaLaunchDeviceV2(void *, struct CUstream_st *);
+#if !defined(__CUDABE__)
+# 167 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/crt/device_functions.h"
+ __device_builtin__ ___device__(extern  __no_sc__) void __syncthreads(void);
+#endif
+# 7 "kernel2.cu"
+__global__ __var_used__ extern void _Z14nw_gpu2_kernelPhS_Pijj(unsigned char *, unsigned char *, int *, unsigned, unsigned);
+# 84 "kernel2.cu"
+__global__ __var_used__ extern void _Z7nw_gpu2PhS_Pij(unsigned char *, unsigned char *, int *, unsigned);
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+___device__(extern  __no_sc__) __inline__ void _ZN4dim3C1Ejjj(struct dim3 *const, unsigned, unsigned, unsigned);
+___device__(extern  __no_sc__) __inline__ void _ZN4dim3C2Ejjj(struct dim3 *const, unsigned, unsigned, unsigned);
+# 9 "kernel2.cu"
+static  __shared__  __var_used__ unsigned _ZZ14nw_gpu2_kernelPhS_PijjE8q_offset;
+# 10 "kernel2.cu"
+static  __shared__  __var_used__ unsigned _ZZ14nw_gpu2_kernelPhS_PijjE8r_offset;
+# 11 "kernel2.cu"
+static  __shared__  __var_used__ unsigned _ZZ14nw_gpu2_kernelPhS_PijjE10loop_limit;
+# 12 "kernel2.cu"
+static  __shared__  __var_used__ int _ZZ14nw_gpu2_kernelPhS_PijjE9buffer1_s[128];
+# 13 "kernel2.cu"
+static  __shared__  __var_used__ int _ZZ14nw_gpu2_kernelPhS_PijjE9buffer2_s[128];
+#include "common_functions.h"
+#if !defined(__CUDABE__)
+#endif
+# 7 "kernel2.cu"
+__global__ __var_used__ void _Z14nw_gpu2_kernelPhS_Pijj(
+# 7 "kernel2.cu"
+unsigned char *reference_d, 
+# 7 "kernel2.cu"
+unsigned char *query_d, 
+# 7 "kernel2.cu"
+int *matrix_d, 
+# 7 "kernel2.cu"
+unsigned N, 
+# 7 "kernel2.cu"
+unsigned round){
+# 7 "kernel2.cu"
+{
+# 14 "kernel2.cu"
+ int *__cuda_local_var_23627_7_non_const_ult_s;
+# 15 "kernel2.cu"
+ int *__cuda_local_var_23628_7_non_const_penult_s;
+# 16 "kernel2.cu"
+__cuda_local_var_23627_7_non_const_ult_s = (_ZZ14nw_gpu2_kernelPhS_PijjE9buffer1_s);
+# 17 "kernel2.cu"
+__cuda_local_var_23628_7_non_const_penult_s = (_ZZ14nw_gpu2_kernelPhS_PijjE9buffer2_s);
+# 19 "kernel2.cu"
+if ((threadIdx.x) == 0U)
+# 19 "kernel2.cu"
+{
+# 21 "kernel2.cu"
+if (round == 1U)
+# 21 "kernel2.cu"
+{
+# 22 "kernel2.cu"
+_ZZ14nw_gpu2_kernelPhS_PijjE8q_offset = (128U * (blockIdx.x));
+# 23 "kernel2.cu"
+_ZZ14nw_gpu2_kernelPhS_PijjE8r_offset = (128U * (((gridDim.x) - 1U) - (blockIdx.x)));
+# 24 "kernel2.cu"
+} else  {
+# 25 "kernel2.cu"
+if (round == 2U)
+# 25 "kernel2.cu"
+{
+# 26 "kernel2.cu"
+_ZZ14nw_gpu2_kernelPhS_PijjE8q_offset = (128U * (((((N + 128U) - 1U) / 128U) - (gridDim.x)) + (blockIdx.x)));
+# 27 "kernel2.cu"
+_ZZ14nw_gpu2_kernelPhS_PijjE8r_offset = (128U * (((((N + 128U) - 1U) / 128U) - (blockIdx.x)) - 1U));
+# 28 "kernel2.cu"
+} }
+# 31 "kernel2.cu"
+_ZZ14nw_gpu2_kernelPhS_PijjE10loop_limit = (((((N - _ZZ14nw_gpu2_kernelPhS_PijjE8q_offset) > 128U) && ((N - _ZZ14nw_gpu2_kernelPhS_PijjE8r_offset) > 128U)) || ((N % 128U) == 0U)) ? 256U : ((((N - _ZZ14nw_gpu2_kernelPhS_PijjE8q_offset) < 128U) && ((N - _ZZ14nw_gpu2_kernelPhS_PijjE8r_offset) < 128U)) ? (2U * (N % 128U)) : (128U + (N % 128U))));
+# 32 "kernel2.cu"
+}
+# 33 "kernel2.cu"
+__syncthreads();
+# 35 "kernel2.cu"
+{
+# 35 "kernel2.cu"
+ int i;
+# 35 "kernel2.cu"
+i = 1;
+# 35 "kernel2.cu"
+for (; (((unsigned)i) < _ZZ14nw_gpu2_kernelPhS_PijjE10loop_limit); i++)
+# 35 "kernel2.cu"
+{
+# 37 "kernel2.cu"
+ int __cuda_local_var_23650_7_non_const_idx;
+# 38 "kernel2.cu"
+ int __cuda_local_var_23651_7_non_const_q_t;
+# 39 "kernel2.cu"
+ int __cuda_local_var_23652_7_non_const_r_t;
+# 50 "kernel2.cu"
+ int __cuda_local_var_23663_7_non_const_q;
+# 51 "kernel2.cu"
+ int __cuda_local_var_23664_7_non_const_r;
+# 52 "kernel2.cu"
+ int __cuda_local_var_23665_7_non_const_max;
+# 74 "kernel2.cu"
+ int *__cuda_local_var_23687_8_non_const_tmp;
+# 37 "kernel2.cu"
+__cuda_local_var_23650_7_non_const_idx = ((i < 129) ? i : (256 - i));
+# 38 "kernel2.cu"
+__cuda_local_var_23651_7_non_const_q_t = 0;
+# 39 "kernel2.cu"
+__cuda_local_var_23652_7_non_const_r_t = 0;
+# 40 "kernel2.cu"
+if (i < 129)
+# 40 "kernel2.cu"
+{
+# 42 "kernel2.cu"
+__cuda_local_var_23651_7_non_const_q_t = ((int)(threadIdx.x));
+# 43 "kernel2.cu"
+__cuda_local_var_23652_7_non_const_r_t = ((int)((((unsigned)__cuda_local_var_23650_7_non_const_idx) - (threadIdx.x)) - 1U));
+# 44 "kernel2.cu"
+}
+# 45 "kernel2.cu"
+else 
+# 45 "kernel2.cu"
+{
+# 47 "kernel2.cu"
+__cuda_local_var_23651_7_non_const_q_t = ((int)(((unsigned)(128 - __cuda_local_var_23650_7_non_const_idx)) + (threadIdx.x)));
+# 48 "kernel2.cu"
+__cuda_local_var_23652_7_non_const_r_t = ((int)((128U - (threadIdx.x)) - 1U));
+# 49 "kernel2.cu"
+}
+# 50 "kernel2.cu"
+__cuda_local_var_23663_7_non_const_q = ((int)(((unsigned)__cuda_local_var_23651_7_non_const_q_t) + _ZZ14nw_gpu2_kernelPhS_PijjE8q_offset));
+# 51 "kernel2.cu"
+__cuda_local_var_23664_7_non_const_r = ((int)(((unsigned)__cuda_local_var_23652_7_non_const_r_t) + _ZZ14nw_gpu2_kernelPhS_PijjE8r_offset));
+# 52 "kernel2.cu"
+__cuda_local_var_23665_7_non_const_max = 0;
+# 53 "kernel2.cu"
+if ((((threadIdx.x) < ((unsigned)__cuda_local_var_23650_7_non_const_idx)) && (((unsigned)__cuda_local_var_23663_7_non_const_q) < N)) && (((unsigned)__cuda_local_var_23664_7_non_const_r) < N))
+# 53 "kernel2.cu"
+{
+# 54 "kernel2.cu"
+ int __cuda_local_var_23667_8_non_const_top;
+# 55 "kernel2.cu"
+ int __cuda_local_var_23668_22_non_const_left;
+# 56 "kernel2.cu"
+ int __cuda_local_var_23669_22_non_const_topleft;
+# 59 "kernel2.cu"
+ int __cuda_local_var_23672_8_non_const_insertion;
+# 60 "kernel2.cu"
+ int __cuda_local_var_23673_22_non_const_deletion;
+# 61 "kernel2.cu"
+ int __cuda_local_var_23674_22_non_const_match;
+# 54 "kernel2.cu"
+__cuda_local_var_23667_8_non_const_top = ((__cuda_local_var_23663_7_non_const_q == 0) ? ((__cuda_local_var_23664_7_non_const_r + 1) * (-1)) : ((__cuda_local_var_23651_7_non_const_q_t == 0) ? (matrix_d[((((unsigned)(__cuda_local_var_23663_7_non_const_q - 1)) * N) + ((unsigned)__cuda_local_var_23664_7_non_const_r))]) : ((i < 129) ? (__cuda_local_var_23627_7_non_const_ult_s[((threadIdx.x) - 1U)]) : (__cuda_local_var_23627_7_non_const_ult_s[(threadIdx.x)]))));
+# 55 "kernel2.cu"
+__cuda_local_var_23668_22_non_const_left = ((__cuda_local_var_23664_7_non_const_r == 0) ? ((__cuda_local_var_23663_7_non_const_q + 1) * (-1)) : ((__cuda_local_var_23652_7_non_const_r_t == 0) ? (matrix_d[((((unsigned)__cuda_local_var_23663_7_non_const_q) * N) + ((unsigned)(__cuda_local_var_23664_7_non_const_r - 1)))]) : ((i < 129) ? (__cuda_local_var_23627_7_non_const_ult_s[(threadIdx.x)]) : (__cuda_local_var_23627_7_non_const_ult_s[((threadIdx.x) + 1U)]))));
+# 56 "kernel2.cu"
+__cuda_local_var_23669_22_non_const_topleft = ((__cuda_local_var_23663_7_non_const_q == 0) ? (__cuda_local_var_23664_7_non_const_r * (-1)) : ((__cuda_local_var_23664_7_non_const_r == 0) ? (__cuda_local_var_23663_7_non_const_q * (-1)) : (((__cuda_local_var_23651_7_non_const_q_t == 0) || (__cuda_local_var_23652_7_non_const_r_t == 0)) ? (matrix_d[((((unsigned)(__cuda_local_var_23663_7_non_const_q - 1)) * N) + ((unsigned)(__cuda_local_var_23664_7_non_const_r - 1)))]) : ((i < 129) ? (__cuda_local_var_23628_7_non_const_penult_s[((threadIdx.x) - 1U)]) : ((i == 129) ? (__cuda_local_var_23628_7_non_const_penult_s[(threadIdx.x)]) : (__cuda_local_var_23628_7_non_const_penult_s[((threadIdx.x) + 1U)]))))));
+# 59 "kernel2.cu"
+__cuda_local_var_23672_8_non_const_insertion = (__cuda_local_var_23667_8_non_const_top + (-1));
+# 60 "kernel2.cu"
+__cuda_local_var_23673_22_non_const_deletion = (__cuda_local_var_23668_22_non_const_left + (-1));
+# 61 "kernel2.cu"
+__cuda_local_var_23674_22_non_const_match = (__cuda_local_var_23669_22_non_const_topleft + ((((int)(query_d[__cuda_local_var_23663_7_non_const_q])) == ((int)(reference_d[__cuda_local_var_23664_7_non_const_r]))) ? 1 : (-1)));
+# 63 "kernel2.cu"
+__cuda_local_var_23665_7_non_const_max = ((__cuda_local_var_23672_8_non_const_insertion > __cuda_local_var_23673_22_non_const_deletion) ? __cuda_local_var_23672_8_non_const_insertion : __cuda_local_var_23673_22_non_const_deletion);
+# 64 "kernel2.cu"
+__cuda_local_var_23665_7_non_const_max = ((__cuda_local_var_23674_22_non_const_match > __cuda_local_var_23665_7_non_const_max) ? __cuda_local_var_23674_22_non_const_match : __cuda_local_var_23665_7_non_const_max);
+# 66 "kernel2.cu"
+}
+# 67 "kernel2.cu"
+__syncthreads();
+# 69 "kernel2.cu"
+if ((((threadIdx.x) < ((unsigned)__cuda_local_var_23650_7_non_const_idx)) && (((unsigned)__cuda_local_var_23663_7_non_const_q) < N)) && (((unsigned)__cuda_local_var_23664_7_non_const_r) < N))
+# 69 "kernel2.cu"
+{
+# 70 "kernel2.cu"
+(__cuda_local_var_23628_7_non_const_penult_s[(threadIdx.x)]) = __cuda_local_var_23665_7_non_const_max;
+# 71 "kernel2.cu"
+(matrix_d[((((unsigned)__cuda_local_var_23663_7_non_const_q) * N) + ((unsigned)__cuda_local_var_23664_7_non_const_r))]) = __cuda_local_var_23665_7_non_const_max;
+# 72 "kernel2.cu"
+}
+# 74 "kernel2.cu"
+__cuda_local_var_23687_8_non_const_tmp = __cuda_local_var_23628_7_non_const_penult_s;
+# 75 "kernel2.cu"
+__cuda_local_var_23628_7_non_const_penult_s = __cuda_local_var_23627_7_non_const_ult_s;
+# 76 "kernel2.cu"
+__cuda_local_var_23627_7_non_const_ult_s = __cuda_local_var_23687_8_non_const_tmp;
+# 78 "kernel2.cu"
+__syncthreads();
+# 79 "kernel2.cu"
+} } 
+# 81 "kernel2.cu"
+}}
+# 84 "kernel2.cu"
+__global__ __var_used__ void _Z7nw_gpu2PhS_Pij(
+# 84 "kernel2.cu"
+unsigned char *reference_d, 
+# 84 "kernel2.cu"
+unsigned char *query_d, 
+# 84 "kernel2.cu"
+int *matrix_d, 
+# 84 "kernel2.cu"
+unsigned N){
+# 84 "kernel2.cu"
+{
+# 89 "kernel2.cu"
+ int __cuda_local_var_23702_6_non_const_numThreadsPerBlock;
+# 89 "kernel2.cu"
+__cuda_local_var_23702_6_non_const_numThreadsPerBlock = 128;
+# 91 "kernel2.cu"
+{
+# 91 "kernel2.cu"
+ unsigned i;
+# 91 "kernel2.cu"
+i = 1U;
+# 91 "kernel2.cu"
+for (; (i < ((((N + 128U) - 1U) / 128U) + 1U)); i++)
+# 91 "kernel2.cu"
+{  struct dim3 __T0;
+ struct dim3 __T1;
+ struct dim3 __T2;
+ struct dim3 __T3;
+ char *__T4;
+# 93 "kernel2.cu"
+ int __cuda_local_var_23706_21_non_const_numBlocks;
+# 93 "kernel2.cu"
+__cuda_local_var_23706_21_non_const_numBlocks = ((int)i);
+# 94 "kernel2.cu"
+(((__T2 = ((_ZN4dim3C1Ejjj((&__T0), ((unsigned)__cuda_local_var_23706_21_non_const_numBlocks), 1U, 1U)) , __T0)) , (void)(__T3 = ((_ZN4dim3C1Ejjj((&__T1), ((unsigned)__cuda_local_var_23702_6_non_const_numThreadsPerBlock), 1U, 1U)) , __T1))) , (__T4 = ((char *)(cudaGetParameterBufferV2(((void *)_Z14nw_gpu2_kernelPhS_Pijj), __T2, __T3, ((unsigned)0UL)))))) ? ((void)(((*((unsigned char **)((void *)__T4))) = reference_d) , (void)(((*((unsigned char **)((void *)(__T4 + 8UL)))) = query_d) , (((*((int **)((void *)(__T4 + 16UL)))) = matrix_d) , (((*((unsigned *)((void *)(__T4 + 24UL)))) = N) , (((*((unsigned *)((void *)(__T4 + 28UL)))) = 1U) , (cudaLaunchDeviceV2(((void *)__T4), ((struct CUstream_st *)((struct CUstream_st *)0LL)))))))))) : ((void)0);
+# 96 "kernel2.cu"
+} }
+# 97 "kernel2.cu"
+{
+# 97 "kernel2.cu"
+ int i;
+# 97 "kernel2.cu"
+i = ((int)((((N + 128U) - 1U) / 128U) - 1U));
+# 97 "kernel2.cu"
+for (; (i > 0); i--)
+# 97 "kernel2.cu"
+{  struct dim3 __T5;
+ struct dim3 __T6;
+ struct dim3 __T7;
+ struct dim3 __T8;
+ char *__T9;
+# 98 "kernel2.cu"
+ int __cuda_local_var_23711_21_non_const_numBlocks;
+# 98 "kernel2.cu"
+__cuda_local_var_23711_21_non_const_numBlocks = i;
+# 99 "kernel2.cu"
+(((__T7 = ((_ZN4dim3C1Ejjj((&__T5), ((unsigned)__cuda_local_var_23711_21_non_const_numBlocks), 1U, 1U)) , __T5)) , (void)(__T8 = ((_ZN4dim3C1Ejjj((&__T6), ((unsigned)__cuda_local_var_23702_6_non_const_numThreadsPerBlock), 1U, 1U)) , __T6))) , (__T9 = ((char *)(cudaGetParameterBufferV2(((void *)_Z14nw_gpu2_kernelPhS_Pijj), __T7, __T8, ((unsigned)0UL)))))) ? ((void)(((*((unsigned char **)((void *)__T9))) = reference_d) , (void)(((*((unsigned char **)((void *)(__T9 + 8UL)))) = query_d) , (((*((int **)((void *)(__T9 + 16UL)))) = matrix_d) , (((*((unsigned *)((void *)(__T9 + 24UL)))) = N) , (((*((unsigned *)((void *)(__T9 + 28UL)))) = 2U) , (cudaLaunchDeviceV2(((void *)__T9), ((struct CUstream_st *)((struct CUstream_st *)0LL)))))))))) : ((void)0);
+# 101 "kernel2.cu"
+} } 
+# 102 "kernel2.cu"
+}}
+__asm__(".align 2");
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+ __attribute__((nv_linkonce_odr)) ___device__( __no_sc__) __inline__ void _ZN4dim3C1Ejjj( struct dim3 *const this, 
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+unsigned vx, 
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+unsigned vy, 
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+unsigned vz){
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+{
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+(this->x) = vx;
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+(this->y) = vy;
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+(this->z) = vz; 
+# 423 "/opt/apps/cuda/11.4/bin/../targets/x86_64-linux/include/vector_types.h"
+}}
+__asm__(".align 2");
+ __attribute__((nv_linkonce_odr)) ___device__( __no_sc__) __inline__ void _ZN4dim3C2Ejjj( struct dim3 *const this,  unsigned __T10,  unsigned __T11,  unsigned __T12){ {  _ZN4dim3C1Ejjj(this, __T10, __T11, __T12);  }}
